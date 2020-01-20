@@ -121,6 +121,16 @@
               file_name: file.name,
             };
 
+            // is new file and has custom properties?
+            if ((this.multiple || this.images.length === 0) && this.customPropertiesFields.length > 0) {
+              this.customPropertiesFields.forEach(field => {
+                // If the field has default value, set its custom property
+                if (field.value) {
+                  _.set(fileData, `custom_properties.${field.attribute}`, field.value)
+                }
+              });
+            }
+
             if (this.multiple) {
               this.images.push(fileData);
             } else {
