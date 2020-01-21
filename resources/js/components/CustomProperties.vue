@@ -50,6 +50,11 @@
 
             handleUpdate (formData) {
                 for (let [property, value] of formData.entries()) {
+                    this.fields.forEach(field => {
+                        if (field.attribute === property && field.component === 'boolean-field') {
+                            value = value === '1'
+                        }
+                    })
                     this.setProperty(property, value)
                 }
 
