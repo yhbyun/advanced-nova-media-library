@@ -9,6 +9,8 @@ use Illuminate\Support\ServiceProvider;
 
 class AdvancedNovaMediaLibraryServiceProvider extends ServiceProvider
 {
+    protected const LANGUAGE_FOLDER = __DIR__ . '/../resources/lang';
+
     public function boot()
     {
         $this->publishes([
@@ -20,7 +22,8 @@ class AdvancedNovaMediaLibraryServiceProvider extends ServiceProvider
         });
 
         Nova::serving(function (ServingNova $event) {
-            Nova::script('media-lib-images-field', __DIR__.'/../dist/js/field.js');
+            Nova::script('media-lib-images-field', __DIR__ . '/../dist/js/field.js');
+            Nova::translations(self::LANGUAGE_FOLDER . '/' . app()->getLocale() . '/lang.json');
         });
     }
 
@@ -32,6 +35,6 @@ class AdvancedNovaMediaLibraryServiceProvider extends ServiceProvider
 
         Route::middleware(['nova'])
             ->prefix('nova-vendor/ebess/advanced-nova-media-library')
-            ->group(__DIR__.'/../routes/api.php');
+            ->group(__DIR__ . '/../routes/api.php');
     }
 }
